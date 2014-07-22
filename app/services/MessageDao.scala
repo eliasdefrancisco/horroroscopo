@@ -67,16 +67,26 @@ object MessageDao {
     }
 
   /**
-   * Find all the messages.
+   * Find all the messages. Reordena el Seq que nos retorna la consulta con una funcion anonima en scala
    *
    * @return All of the messages.
    */
   def findAll(): Future[Seq[Message]] = {
     collection.find(Json.obj())
       .options(QueryOpts())
-      .sort(Json.obj("_id" -> -1))
+      .sort(Json.obj("signo" -> 1, "_id" -> -1))
       .cursor[Message]
-      .collect[Seq]()
+      .collect[Seq]().map{ messages =>
+      // Reaordena colección. Cambia los campos null a la cola de las predicciones
+      def nullCola(in: Seq[Message], outSigno: Seq[Message], outCola: Seq[Message], count: Int): Seq[Message] = {
+        if(in.length > count){
+          if(in(count).signo == "") nullCola(in, outSigno, outCola :+ in(count), count + 1)
+          else nullCola(in, outSigno :+ in(count), outCola , count + 1)
+        }
+        else outSigno ++ outCola
+      }
+      nullCola(messages, Nil, Nil, 0)
+    }
   }
 
   /** The total number of messages */
