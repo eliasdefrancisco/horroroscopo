@@ -21,7 +21,9 @@ object MainController extends Controller {
       Routes.javascriptRouter("routes")(
         routes.javascript.MainController.events,
         routes.javascript.MessageController.getMessages,
-        routes.javascript.MessageController.saveMessage
+        routes.javascript.MessageController.saveMessage,
+        routes.javascript.MessageController.updateMessage,
+        routes.javascript.MessageController.removeMessage
       )
     ).as("text/javascript")
   }

@@ -30,6 +30,39 @@
         </div>
     </div>
 
+    <div class="modal fade" id="updateMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-bind="click: closeMessage">&times;</button>
+                    <h3>Update Prediction</h3>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <input type="hidden" data-bind="value: idValue" />
+                        <div class="form-group">
+                            <label for="messageField">Predicción</label>
+                            <textarea class="form-control" id="messageField" placeholder="AÃ±ade una predicción"
+                            data-bind="value: messageField" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="signoField">Signo del zodiaco</label>
+                            <select class="form-control" id="signoField"
+                            data-bind="options: signoValues, value: selectedSignoValue">
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-link" data-dismiss="modal" data-bind="click: closeMessage">Cerrar</button>
+                    <button class="btn btn-danger" data-bind="click: removeMessage">Borrar</button>
+                    <button class="btn btn-primary" data-bind="click: updateMessage">Update Prediction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-4">
             <h2>Güelcom Admin</h2>
@@ -42,8 +75,17 @@
         </div>
 
         <div class="col-md-8">
+            <h2>Predicciones almacenadas</h2>
             <ul class="list-unstyled messages" data-bind="foreach: messages">
-                <li data-bind="text: $data.message"></li>
+                <li>
+                    <a data-toggle="modal" href="#updateMessageModal" class="btn btn-default btn-sm" style="float: left; margin-right: 20px"
+                        data-bind="click: $root.cargaItem">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <h4 class="text-success" data-bind="text: $data.signo"></h4>
+                @*<p class="text-success" data-bind="text: $data._id.$oid"></p>*@
+                <p class="text-muted" data-bind="text: $data.message"></p>
+                </li>
             </ul>
         </div>
 

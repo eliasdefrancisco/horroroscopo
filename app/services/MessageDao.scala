@@ -12,6 +12,7 @@ import play.api.libs.json.Json
 import reactivemongo.api.QueryOpts
 import reactivemongo.core.commands.Count
 import reactivemongo.bson.BSONObjectID
+import reactivemongo.bson.BSONDocument
 
 /** A data access object for messages backed by a MongoDB collection */
 object MessageDao {
@@ -24,14 +25,46 @@ object MessageDao {
    *
    * @return The saved message, once saved.
    */
-  def save(message: Message): Future[Message] = {
-    collection.save(message).map {
-      case ok if ok.ok =>
-        EventDao.publish("message", message)
-        message
+  def save(message: Message): Future[Message] =
+    removeSigno(message).map{ m =>
+      saveAfterRemove(m)
+      m
+    }
+
+  /**
+   * Elimina el signo pasado como parametro a toda la colección
+   *
+   */
+  def removeSigno(message: Message): Future[Message] = {
+    val selector = BSONDocument{"signo" -> message.signo}
+    val modifier = BSONDocument{"$set" -> BSONDocument{"signo" -> ""}}
+    collection.update(selector, modifier).map{
+      case ok if ok.ok => message
       case error => throw new RuntimeException(error.message)
     }
   }
+
+  /**
+   * Guarda una predicción despues de removeSigno
+   *
+   */
+  def saveAfterRemove(message: Message): Future[Message] = collection.save(message).map {
+    case ok if ok.ok =>
+      EventDao.publish("message", message)
+      message
+    case error => throw new RuntimeException(error.message)
+  }
+
+  /**
+   * Elimina un mensaje de la colección
+   *
+   */
+  def remove(message: Message): Future[Message] =
+    collection.remove(message).map {
+      case ok if ok.ok =>
+        EventDao.publish("message", message)
+        message
+    }
 
   /**
    * Find all the messages.

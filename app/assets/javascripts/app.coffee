@@ -6,6 +6,9 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
     constructor: () ->
       self = @
 
+      # valor actual del ID de la predicción a modificar
+      @idValue = ko.observable()
+
       # valores posibles para el campo Signo
       @signoValues = ["", "Aries", "Tauro", "Géminis", "Cancer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"]
 
@@ -18,6 +21,43 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
       # the messages field that messages are entered into
       @messageField = ko.observable()
 
+
+      # carga un Item para su edición o borrado en el formulario
+      @cargaItem = (item) ->
+        @messageItem = self.messages()[self.messages().indexOf(item)].message
+        @signoItem = self.messages()[self.messages().indexOf(item)].signo
+        @idItem = self.messages()[self.messages().indexOf(item)]._id
+        #$("#geek").text("Message: " + @messageItem)
+        self.messageField(@messageItem)
+        self.selectedSignoValue(@signoItem)
+        self.idValue(@idItem)
+        #console.log(@idItem)
+
+      # actualiza los campos de una predicción
+      @updateMessage = () ->
+        @ajax(routes.controllers.MessageController.updateMessage(), {
+          data: JSON.stringify({
+            _id: @idValue()
+            message: @messageField()
+            signo: @selectedSignoValue()
+          })
+          contentType: "application/json"
+        }).done(() ->
+          $("#updateMessageModal").modal("hide")
+        )
+
+      # borra una predicción
+      @removeMessage = () ->
+        @ajax(routes.controllers.MessageController.removeMessage(), {
+          data: JSON.stringify({
+            _id: @idValue()
+            message: @messageField()
+            signo: @selectedSignoValue()
+          })
+          contentType: "application/json"
+        }).done(() ->
+          $("#updateMessageModal").modal("hide")
+        )
 
       # establece a null todas las variables observables cuando se cierra la ventana del formulario
       @closeMessage = ->

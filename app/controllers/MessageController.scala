@@ -10,7 +10,7 @@ import scala.concurrent.Future
 
 object MessageController extends Controller {
 
-  /** Action to get the messages */
+  /** Action to get the predictions */
   def getMessages() = Action.async { implicit req =>
     for {
       count <- MessageDao.count
@@ -34,6 +34,22 @@ object MessageController extends Controller {
     Json.fromJson[MessageForm](req.body).fold(
       invalid => Future.successful(BadRequest("Bad message form")),
       form => MessageDao.save(form.toMessage).map(_ => Created)
+    )
+  }
+
+  /**  Action to update a prediction, Al venir completo con el ID, puede serializarse con el Modelo por defecto */
+  def updateMessage = Action.async(parse.json) { req =>
+    Json.fromJson[Message](req.body).fold(
+      invalid => Future.successful(BadRequest("Bad message form")),
+      form => MessageDao.save(form).map(_ => Created)
+    )
+  }
+
+  /**  Action to delete a prediction, Al venir completo con el ID, puede serializarse con el Modelo por defecto */
+  def removeMessage = Action.async(parse.json) { req =>
+    Json.fromJson[Message](req.body).fold(
+      invalid => Future.successful(BadRequest("Bad message form")),
+      form => MessageDao.remove(form).map(_ => Created)
     )
   }
 
