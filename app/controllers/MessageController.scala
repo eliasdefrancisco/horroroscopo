@@ -11,25 +11,12 @@ import scala.concurrent.Future
 object MessageController extends Controller {
 
   /** Action to get the messages */
-  def getMessages(page: Int, perPage: Int) = Action.async { implicit req =>
+  def getMessages() = Action.async { implicit req =>
     for {
       count <- MessageDao.count
-      messages <- MessageDao.findAll(page, perPage)
+      messages <- MessageDao.findAll()
     } yield {
-      val result = Ok(Json.toJson(messages))
-
-      // Calculate paging headers, if necessary
-      val next = if (count > (page + 1) * perPage) Some("next" -> (page + 1)) else None
-      val prev = if (page > 0) Some("prev" -> (page - 1)) else None
-      val links = next ++ prev
-      if (links.isEmpty) {
-        result
-      } else {
-        result.withHeaders("Link" -> links.map {
-          case (rel, p) =>
-            "<" + routes.MessageController.getMessages(p, perPage).absoluteURL() + ">; rel=\"" + rel + "\""
-        }.mkString(", "))
-      }
+      Ok(Json.toJson(messages))
     }
   }
 

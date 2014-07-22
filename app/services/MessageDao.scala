@@ -17,7 +17,7 @@ import reactivemongo.bson.BSONObjectID
 object MessageDao {
 
   /** The messages collection */
-  private def collection = ReactiveMongoPlugin.db.collection[JSONCollection]("messages")
+  private def collection = ReactiveMongoPlugin.db.collection[JSONCollection]("predictions")
 
   /**
    * Save a message.
@@ -36,16 +36,14 @@ object MessageDao {
   /**
    * Find all the messages.
    *
-   * @param page The page to retrieve, 0 based.
-   * @param perPage The number of results per page.
    * @return All of the messages.
    */
-  def findAll(page: Int, perPage: Int): Future[Seq[Message]] = {
+  def findAll(): Future[Seq[Message]] = {
     collection.find(Json.obj())
-      .options(QueryOpts(page * perPage))
+      .options(QueryOpts())
       .sort(Json.obj("_id" -> -1))
       .cursor[Message]
-      .collect[Seq](perPage)
+      .collect[Seq]()
   }
 
   /** The total number of messages */

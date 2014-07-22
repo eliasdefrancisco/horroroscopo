@@ -34,21 +34,13 @@
             <p>In the front end, <a href="http://knockoutjs.com/">knockout.js</a> is being used to provide a reactive user interface.  <a href="http://getbootstrap.com/">Bootstrap</a> is being used for styling, and <a href="http://jquery.org">jQuery</a> is being used to make AJAX calls, in combination with the Play Javascript router.</p>
             <p>To receive real time updates of new messages, server sent events are being used, subscribing to the MongoDB tailable cursor on the backend.</p>
         </div>
-        <div class="col-md-8">
-            <ul class="pager">
-                <li class="previous" data-bind="css: { disabled: prevMessagesUrl() == null }">
-                    <a href="#" data-bind="click: prevMessages">Previous</a>
-                </li>
-                <li class="next" data-bind="css: { disabled: nextMessagesUrl() == null }">
-                    <a href="#" data-bind="click: nextMessages">Next</a>
-                </li>
-            </ul>
 
+        <div class="col-md-8">
             <ul class="list-unstyled messages" data-bind="foreach: messages">
                 <li data-bind="text: $data.message"></li>
             </ul>
-
         </div>
+
     </div>
 
 
