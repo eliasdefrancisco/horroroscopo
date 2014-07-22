@@ -10,7 +10,7 @@ import play.modules.reactivemongo.json.BSONFormats._
  * @param _id The BSON object id of the message
  * @param message The message
  */
-case class Message(_id: BSONObjectID, message: String)
+case class Message(_id: BSONObjectID, message: String, signo: String)
 
 object Message {
   /**

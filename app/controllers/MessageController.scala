@@ -23,8 +23,8 @@ object MessageController extends Controller {
   /**
    * The message form.  This is separate from the database message since the form doesn't have an ID.
    */
-  case class MessageForm(message: String) {
-    def toMessage: Message = Message(BSONObjectID.generate, message)
+  case class MessageForm(message: String, signo: String) {
+    def toMessage: Message = Message(BSONObjectID.generate, message, signo)
   }
 
   implicit val messageFormFormat = Json.format[MessageForm]
