@@ -8,6 +8,13 @@ GET         /events                controllers.MainController.events
 GET         /message               controllers.MessageController.getMessages()
 POST        /message               controllers.MessageController.saveMessage
 
+POST        /login                 controllers.MainController.login()
+GET         /login                 controllers.MainController.login()
+POST        /logout                controllers.MainController.logout()
+GET         /logout                controllers.MainController.logout()
+
+GET         /horror                controllers.MainController.indexAdmin()
+
 # Webjars, requirejs, routes and other assets
 GET         /lib/require.js        controllers.WebJarAssets.requirejs
 GET         /webjars/*file         controllers.WebJarAssets.at(file)

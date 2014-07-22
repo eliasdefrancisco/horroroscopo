@@ -1,0 +1,15 @@
+@(loginForm: Form[LoginData])
+
+@import helper.twitterBootstrap._
+
+@main("Identifícate") {
+
+    <h2>Identificación</h2>
+    <p>Introduce la password de identificación mas segura y mas usada en el mundo [1234]</p>
+
+    @helper.form(action = routes.MainController.login()) {
+        @helper.inputPassword(loginForm("Password"), 'id -> "loginField", 'size -> 30)
+        <button type="submit" class="btn btn-primary" id="loginBtn">Come on!</button>
+    }
+
+}
