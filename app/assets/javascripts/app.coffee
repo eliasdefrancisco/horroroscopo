@@ -6,6 +6,9 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
     constructor: () ->
       self = @
 
+      # valor actual del mensaje del mensaje de la predicciÃ³n mostrada en pantalla al usuario
+      @prediccionActual = ko.observable("")
+
       # valor actual del ID de la predicción a modificar
       @idValue = ko.observable()
 
@@ -21,6 +24,16 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
       # the messages field that messages are entered into
       @messageField = ko.observable()
 
+
+      # carga una prediccion en base al signo seleccionado por el usuario
+      @cargaPrediccion = () ->
+        if(self.selectedSignoValue() == "")
+          self.prediccionActual("")
+        else
+          for message in self.messages()
+            do(message) ->
+              if(message.signo == self.selectedSignoValue())
+                self.prediccionActual(message.message)
 
       # carga un Item para su edición o borrado en el formulario
       @cargaItem = (item) ->

@@ -66,9 +66,11 @@
     <div class="row">
         <div class="col-md-4">
             <h2>Güelcom Admin</h2>
-            <p>Welcome to the Play MongoDB and knockout.js template.</p>
-            <p>This template shows how you can create a reactive Play application with a rich front end and scalable backend.</p>
-            <p>Try adding a message: <a data-toggle="modal" href="#addMessageModal" class="btn btn-primary">Add message</a></p>
+            <p>Este es el administrador de predicciones</p>
+            <p>En esta pantalla puedes añadir, modificar o borrar las predicciones del Horroroscopo. Así que ojito con no borrar nada 0_o</p>
+            <p><a data-toggle="modal" href="#addMessageModal" class="btn btn-primary">Añade una nueva predicción</a></p>
+            <br/>
+            <p class="text-muted" id="geek">[Solo para Geeks :-]</p>
             <p>In the backend, <a href="http://mongodb.org">MongoDB</a> is being used to store messages entered in the front end.  <a href="http://reactivemongo.org">Reactive Mongo</a> is being used to talk to MongoDB, using reactive IO.  MongoDB is also being used to publish events, using a tailable cursor on a capped collection.  This ensures that a Play application stays stateless, which allows it to easily scale out to react to load, and gracefully handle faults.</p>
             <p>In the front end, <a href="http://knockoutjs.com/">knockout.js</a> is being used to provide a reactive user interface.  <a href="http://getbootstrap.com/">Bootstrap</a> is being used for styling, and <a href="http://jquery.org">jQuery</a> is being used to make AJAX calls, in combination with the Play Javascript router.</p>
             <p>To receive real time updates of new messages, server sent events are being used, subscribing to the MongoDB tailable cursor on the backend.</p>
