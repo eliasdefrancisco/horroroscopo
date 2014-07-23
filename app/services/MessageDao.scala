@@ -25,11 +25,15 @@ object MessageDao {
    *
    * @return The saved message, once saved.
    */
-  def save(message: Message): Future[Message] =
-    removeSigno(message).map{ m =>
-      saveAfterRemove(m)
-      m
-    }
+  def save(message: Message): Future[Message] = {
+    removeSigno(message).flatMap( m => saveAfterRemove(m) )
+
+//    for {
+//      signo <- removeSigno(message)
+//      msg <- saveAfterRemove(message)
+//    } yield msg
+
+  }
 
   /**
    * Elimina el signo pasado como parametro a toda la colección
@@ -76,16 +80,18 @@ object MessageDao {
       .options(QueryOpts())
       .sort(Json.obj("signo" -> 1, "_id" -> -1))
       .cursor[Message]
-      .collect[Seq]().map{ messages =>
-      // Reaordena colección. Cambia los campos null a la cola de las predicciones
-      def nullCola(in: Seq[Message], outSigno: Seq[Message], outCola: Seq[Message], count: Int): Seq[Message] = {
-        if(in.length > count){
-          if(in(count).signo == "") nullCola(in, outSigno, outCola :+ in(count), count + 1)
-          else nullCola(in, outSigno :+ in(count), outCola , count + 1)
-        }
-        else outSigno ++ outCola
-      }
-      nullCola(messages, Nil, Nil, 0)
+      .collect[Seq]().map{ messages => messages.sortWith((a,b) => a!="")
+
+        //---- Se sustituye con un simple sortWith() o_O
+        // Reaordena colección. Cambia los campos null a la cola de las predicciones
+//        def nullCola(in: Seq[Message], outSigno: Seq[Message], outCola: Seq[Message], count: Int): Seq[Message] = {
+//          if(in.length > count){
+//            if(in(count).signo == "") nullCola(in, outSigno, outCola :+ in(count), count + 1)
+//            else nullCola(in, outSigno :+ in(count), outCola , count + 1)
+//          }
+//          else outSigno ++ outCola
+//        }
+//        nullCola(messages, Nil, Nil, 0)
     }
   }
 

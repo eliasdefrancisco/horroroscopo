@@ -27,13 +27,14 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
 
       # carga una prediccion en base al signo seleccionado por el usuario
       @cargaPrediccion = () ->
-        if(self.selectedSignoValue() == "")
-          self.prediccionActual("")
-        else
+        self.prediccionActual("")
+        if(self.selectedSignoValue() != "")
           for message in self.messages()
             do(message) ->
               if(message.signo == self.selectedSignoValue())
                 self.prediccionActual(message.message)
+
+          
 
       # carga un Item para su edición o borrado en el formulario
       @cargaItem = (item) ->
