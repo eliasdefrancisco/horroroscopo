@@ -12,20 +12,24 @@
     <script data-main="@routes.Assets.at("javascripts/app.js")" type='text/javascript' src='@routes.WebJarAssets.requirejs'></script>
 </head>
 <body>
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-            </button>
-            <a class="navbar-brand" href="#">@title</a>
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">@title</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="login">Login</a></li>
+                </ul>
+            </div>
         </div>
-
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="login">Login</a></li>
-            </ul>
-        </div>
-    </nav>
+    </div>
     <div class="container">
         @content
     </div>
