@@ -1,4 +1,4 @@
-name := """play-mongo-knockout"""
+name := """horroroscopo"""
 
 version := "1.0-SNAPSHOT"
 
