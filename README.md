@@ -11,6 +11,8 @@ Consta de una zona de administración, a la cual accedemos mediante un formulari
 
 Por otro lado tenemos la página principal del usuario final, el cual podrá seleccionar un signo del zodiaco para conocer la prediccion asignada al mismo
 
+Es necesario tener corriendo en una instancia de MongoDB en localhost, ademas de Scala y sbt
+
 Espero que os guste 
 :)
 

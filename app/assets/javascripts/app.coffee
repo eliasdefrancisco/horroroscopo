@@ -34,7 +34,7 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
               if(message.signo == self.selectedSignoValue())
                 self.prediccionActual(message.message)
 
-          
+
 
       # carga un Item para su edición o borrado en el formulario
       @cargaItem = (item) ->
