@@ -86,7 +86,7 @@
                     </a>
                     <h4 class="text-success" data-bind="text: $data.signo"></h4>
                 @*<p class="text-success" data-bind="text: $data._id.$oid"></p>*@
-                <p class="text-muted" data-bind="text: $data.message"></p>
+                <p class="text-muted" data-bind="text: $root.resumen($data.message)"></p>
                 </li>
             </ul>
         </div>

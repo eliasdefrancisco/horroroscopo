@@ -3,9 +3,11 @@
 # ~~~~
 
 GET         /                      controllers.MainController.index(path = "")
+
 GET         /events                controllers.MainController.events
 
 GET         /message               controllers.MessageController.getMessages()
+
 POST        /message               controllers.MessageController.saveMessage
 
 POST        /update                controllers.MessageController.updateMessage
@@ -14,6 +16,7 @@ POST        /remove                controllers.MessageController.removeMessage
 
 POST        /login                 controllers.MainController.login()
 GET         /login                 controllers.MainController.login()
+
 POST        /logout                controllers.MainController.logout()
 GET         /logout                controllers.MainController.logout()
 

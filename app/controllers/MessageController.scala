@@ -29,6 +29,9 @@ object MessageController extends Controller {
 
   implicit val messageFormFormat = Json.format[MessageForm]
 
+
+// TODO: Simplificar  las funciones de manipulación de registros a una sola función
+
   /** Action to save a message */
   def saveMessage = Action.async(parse.json) { req =>
     Json.fromJson[MessageForm](req.body).fold(

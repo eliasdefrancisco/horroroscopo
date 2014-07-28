@@ -25,7 +25,16 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
       @messageField = ko.observable()
 
 
-      # carga una prediccion en base al signo seleccionado por el usuario
+
+      # devuelve el resumen de un texto pasado como parametro
+      @resumen = (texto) ->
+        if(texto.length > 200)
+          texto.substring(0,199).concat("...")
+        else
+          texto
+
+
+      # carga una predicción en base al signo seleccionado por el usuario
       @cargaPrediccion = () ->
         self.prediccionActual("")
         if(self.selectedSignoValue() != "")
@@ -33,7 +42,6 @@ require(["webjars!knockout.js", 'webjars!jquery.js', "/routes.js", "webjars!boot
             do(message) ->
               if(message.signo == self.selectedSignoValue())
                 self.prediccionActual(message.message)
-
 
 
       # carga un Item para su edición o borrado en el formulario

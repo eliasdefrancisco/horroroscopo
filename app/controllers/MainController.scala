@@ -52,7 +52,7 @@ object MainController extends Controller {
     )
   }
 
-  /** Comprueba si estamos identificados y nos lleva a la administraciÃ³n */
+  /** Comprueba si estamos identificados y nos lleva a la administración */
   def indexAdmin() = Action { implicit request =>
     //Ok(request.session.get("auth").toString())
     request.session.get("auth") match{

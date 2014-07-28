@@ -28,6 +28,7 @@ object MessageDao {
   def save(message: Message): Future[Message] = {
     removeSigno(message).flatMap( m => saveAfterRemove(m) )
 
+    // Alternativa a concatenación de futuros
 //    for {
 //      signo <- removeSigno(message)
 //      msg <- saveAfterRemove(message)
@@ -71,16 +72,18 @@ object MessageDao {
     }
 
   /**
-   * Find all the messages. Reordena el Seq que nos retorna la consulta con una funcion anonima en scala
+   * Find all the messages. Ordena pertinentemente
    *
    * @return All of the messages.
    */
   def findAll(): Future[Seq[Message]] = {
+    val ordenSigno = Array("Aries", "Tauro", "Géminis", "Cancer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis", "")
     collection.find(Json.obj())
-      .options(QueryOpts())
-      .sort(Json.obj("signo" -> 1, "_id" -> -1))
       .cursor[Message]
-      .collect[Seq]().map{ messages => messages.sortWith((a,b) => a!="")
+      .collect[Seq]().map{ messages => messages.sortWith((a,b) => ordenSigno.indexOf(a.signo) < ordenSigno.indexOf(b.signo))}
+
+      // ----- Posiciona los signos null abajo, pero ya no hace falta con la nueva consulta
+      //.collect[Seq]().map{ messages => messages.sortWith((a,b) => a.signo.length > 0)
 
         //---- Se sustituye con un simple sortWith() o_O
         // Reaordena colección. Cambia los campos null a la cola de las predicciones
@@ -92,7 +95,7 @@ object MessageDao {
 //          else outSigno ++ outCola
 //        }
 //        nullCola(messages, Nil, Nil, 0)
-    }
+
   }
 
   /** The total number of messages */
