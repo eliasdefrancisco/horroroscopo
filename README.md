@@ -1,4 +1,4 @@
-horroroscopo
+horroroscopo ≧☉_☉≦
 ============
 
 Proyecto Play2 Framework con el que finalizo el curso de Scala impartido por Raúl Raja Martínez
